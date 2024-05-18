@@ -1,0 +1,9 @@
+output/
+__pycache__
+
+.vscode
+*.tar.gz
+
+collections
+
+*sandbox*

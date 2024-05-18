@@ -1,0 +1,3 @@
+
+
+PyYAML >= 5.1  # PyYAML 5.1 is required for Python 3.8+ support

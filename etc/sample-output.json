@@ -1,0 +1,460 @@
+
+"script_content_int_test": {
+    "add_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": "name=\"script_content_int_test\" source=\"/system identity print\n/system resource print\n\" comment=\"added by ansible routeros_batch.script integration test\" ",
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "added: .id= *26"
+        ]
+    },
+    "changed": true,
+    "exec_result": {
+        "changed": false,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": "run number=script_content_int_test",
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": []
+    },
+    "failed": false,
+    "name": "script_content_int_test",
+    "remove_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": "script_content_int_test",
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "removed: .id= script_content_int_test"
+        ]
+    },
+    "replaced_msg": "Script 'script_content_int_test' was replaced: ['removed: .id= script_content_int_test']; ['added: .id= *26']",
+    "replaced_script": true,
+    "script": "/system identity print\n/system resource print\n",
+    "state": "executed_once"
+}
+
+// Successful executed_clean output
+"script_command_int_test": {
+    "add_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": "name=\"script_command_int_test\" source=\"; ### present: Put VPN bridge 'bridge' ### ;\n\n:if ([:len [/interface bridge find name=\\\"bridge\\\" ]] > 0) do={\n\t/interface bridge set [ find name=\\\"bridge\\\" ] name=\\\"bridge\\\" fast-forward=no \n} else={\n\t/interface bridge add name=\\\"bridge\\\" fast-forward=no \n}\n\n\n; ### absent: Remove VPN user 'guest' ### ;\n\n:if ([:len [/ppp secret find name=\\\"guest\\\" ]] > 0) do={\n\t/ppp secret remove [ find name=\\\"guest\\\" ]\n}\n\n\n\" comment=\"added by ansible routeros_batch.script integration test\" ",
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "added: .id= *29"
+        ]
+    },
+    "changed": true,
+    "clean_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": "script_command_int_test",
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "removed: .id= script_command_int_test"
+        ]
+    },
+    "exec_result": {
+        "changed": false,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": "run number=script_command_int_test",
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": []
+    },
+    "failed": false,
+    "name": "script_command_int_test",
+    "remove_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": "script_command_int_test",
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "removed: .id= script_command_int_test"
+        ]
+    },
+    "replaced_msg": "Script 'script_command_int_test' was replaced: ['removed: .id= script_command_int_test']; ['added: .id= *29']",
+    "replaced_script": true,
+    "script": "; ### present: Put VPN bridge 'bridge' ### ;\n\n:if ([:len [/interface bridge find name=\\\"bridge\\\" ]] > 0) do={\n\t/interface bridge set [ find name=\\\"bridge\\\" ] name=\\\"bridge\\\" fast-forward=no \n} else={\n\t/interface bridge add name=\\\"bridge\\\" fast-forward=no \n}\n\n\n; ### absent: Remove VPN user 'guest' ### ;\n\n:if ([:len [/ppp secret find name=\\\"guest\\\" ]] > 0) do={\n\t/ppp secret remove [ find name=\\\"guest\\\" ]\n}\n\n\n",
+    "state": "executed_clean"
+}
+
+// Fail: Wrong paths script - executed_clean output
+"script_command_int_test": {
+    "add_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": "name=\"script_command_int_test\" source=\"; ### present: Put VPN bridge 'bridge' ### ;\n\n# Unsupported path: '/interASDFface bridge' is not recognized as a RouterOS item or list path\n\n\n; ### absent: Remove VPN user 'guest' ### ;\n\n# Unsupported path: '/pppASDF secret' is not recognized as a RouterOS item or list path\n\n\n\" comment=\"added by ansible routeros_batch.script integration test\" ",
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "added: .id= *21"
+        ]
+    },
+    "changed": true,
+    "clean_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": "script_command_int_test",
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "removed: .id= script_command_int_test"
+        ]
+    },
+    "exec_result": {
+        "changed": false,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": "run number=script_command_int_test",
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": []
+    },
+    "failed": true,
+    "name": "script_command_int_test",
+    "remove_result": {
+        "failed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": "script_command_int_test",
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "no such item"
+        ]
+    },
+    "replaced_msg": "Script 'script_command_int_test' was added, a script with the same name was not present prior: ['added: .id= *21']",
+    "replaced_script": true,
+    "script": "; ### present: Put VPN bridge 'bridge' ### ;\n\n# Unsupported path: '/interASDFface bridge' is not recognized as a RouterOS item or list path\n\n\n; ### absent: Remove VPN user 'guest' ### ;\n\n# Unsupported path: '/pppASDF secret' is not recognized as a RouterOS item or list path\n\n\n",
+    "state": "executed_clean"
+}
+
+// Fail: Wrong attributes script - executed_clean output
+"script_command_int_test": {
+    "add_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": "name=\"script_command_int_test\" source=\"; ### present: Put VPN bridge 'bridge' ### ;\n\n:if ([:len [/interface bridge find naASDFme=\\\"bridge\\\" ]] > 0) do={\n\t/interface bridge set [ find naASDFme=\\\"bridge\\\" ] naASDFme=\\\"bridge\\\" fast-forwardASDF=no \n} else={\n\t/interface bridge add naASDFme=\\\"bridge\\\" fast-forwardASDF=no \n}\n\n\n; ### absent: Remove VPN user 'guest' ### ;\n\n:if ([:len [/ppp secret find naASDFme=\\\"guest\\\" ]] > 0) do={\n\t/ppp secret remove [ find naASDFme=\\\"guest\\\" ]\n}\n\n\n\" comment=\"added by ansible routeros_batch.script integration test\" ",
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "added: .id= *2B"
+        ]
+    },
+    "changed": true,
+    "clean_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": "script_command_int_test",
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "removed: .id= script_command_int_test"
+        ]
+    },
+    "exec_result": {
+        "exception": "  File \"/tmp/ansible_community.routeros.api_payload_vvti24rr/ansible_community.routeros.api_payload.zip/ansible_collections/community/routeros/plugins/modules/api.py\", line 554, in api_arbitrary\n  File \"/home/jowest/.local/lib/python3.9/site-packages/librouteros/api.py\", line 110, in __call__\n    yield from self.api(\n  File \"/home/jowest/.local/lib/python3.9/site-packages/librouteros/api.py\", line 35, in __call__\n    yield from self.readResponse()\n  File \"/home/jowest/.local/lib/python3.9/site-packages/librouteros/api.py\", line 76, in readResponse\n    raise traps[0]\n",
+        "failed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": "run number=script_command_int_test",
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": null,
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "expected end of command (line 4 column 57)"
+        ]
+    },
+    "failed": false,
+    "name": "script_command_int_test",
+    "remove_result": {
+        "changed": true,
+        "invocation": {
+            "module_args": {
+                "add": null,
+                "ca_path": null,
+                "cmd": null,
+                "encoding": "ASCII",
+                "extended_query": null,
+                "force_no_cert": false,
+                "hostname": "192.168.1.11",
+                "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+                "path": "/system script",
+                "port": null,
+                "query": null,
+                "remove": "script_command_int_test",
+                "timeout": 10,
+                "tls": false,
+                "update": null,
+                "username": "admin",
+                "validate_cert_hostname": false,
+                "validate_certs": true
+            }
+        },
+        "msg": [
+            "removed: .id= script_command_int_test"
+        ]
+    },
+    "replaced_msg": "Script 'script_command_int_test' was replaced: ['removed: .id= script_command_int_test']; ['added: .id= *2B']",
+    "replaced_script": true,
+    "script": "; ### present: Put VPN bridge 'bridge' ### ;\n\n:if ([:len [/interface bridge find naASDFme=\\\"bridge\\\" ]] > 0) do={\n\t/interface bridge set [ find naASDFme=\\\"bridge\\\" ] naASDFme=\\\"bridge\\\" fast-forwardASDF=no \n} else={\n\t/interface bridge add naASDFme=\\\"bridge\\\" fast-forwardASDF=no \n}\n\n\n; ### absent: Remove VPN user 'guest' ### ;\n\n:if ([:len [/ppp secret find naASDFme=\\\"guest\\\" ]] > 0) do={\n\t/ppp secret remove [ find naASDFme=\\\"guest\\\" ]\n}\n\n\n",
+    "state": "executed_clean"
+}
+
+

@@ -1,0 +1,138 @@
+---
+# Copyright (c) Ansible Project
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+
+- name: Test content script execution against Mikrotik RouterOS
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "script_content_int_test"
+    comment: "added by ansible routeros_batch.script integration test"     
+    verbose_steps: true
+    state: executed_clean
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    content: |
+      /system identity print
+      /system resource print
+  register: script_content_int_test
+
+- debug: 
+    var: script_content_int_test
+- assert:
+    that: 
+      - script_content_int_test.failed == false
+      - script_content_int_test.changed == true
+      - script_content_int_test.script | length > 1
+
+
+- name: Test command generation against Mikrotik RouterOS
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "script_command_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    commands: 
+    - desc: Put VPN bridge 'bridge'
+      path: /interface bridge
+      state: present
+      values:
+      - attr: name
+        value: bridge
+        mode: both
+      - attr: fast-forward
+        value: no
+    - desc: Remove VPN user 'guest'
+      path: /ppp secret
+      state: absent
+      values:
+      - attr: name
+        value: guest
+        mode: both
+      - attr: password
+        value: 'asdfASDF'
+      - attr: profile
+        value: profile-vpn
+      - attr: service
+        value: any
+  register: script_command_int_test
+
+- debug: 
+    var: script_command_int_test
+- assert:
+    that: 
+      - script_command_int_test.failed == false
+      - script_command_int_test.changed == true
+      - script_command_int_test.script | length > 1
+
+- name: Fail test - bad path
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_path_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    commands: 
+    - desc: Put VPN bridge 'bridge'
+      path: /BadPathinterface bridge
+      state: present
+      values:
+      - attr: name
+        value: bridge
+        mode: both
+      - attr: fast-forward
+        value: no
+  register: bad_path_int_test
+
+- debug: 
+    var: bad_path_int_test
+- name: "Fail test - bad path"
+  assert:
+    that: 
+      - bad_path_int_test.failed == true
+      # an unrecognized path without a path type is caught by the module, 
+      # so it should not change the target device
+      - bad_path_int_test.changed == false 
+
+
+- name: Fail test - bad attribute
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_attribute_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    commands: 
+    - desc: Put VPN bridge 'bridge'
+      path: /interface bridge
+      state: present
+      values:
+      - attr: fake_attr
+        value: bridge
+        mode: both
+      - attr: fast-forward
+        value: no
+  register: bad_attribute_int_test
+
+- debug: 
+    var: bad_attribute_int_test
+- name: "Fail test - bad path"
+  assert:
+    that: 
+      - bad_attribute_int_test.failed == true
+      # a bad attribute is only caught during script execution, 
+      # so replacing the script should signal the target device was changed
+      - bad_attribute_int_test.changed == true   

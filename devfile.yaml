@@ -1,0 +1,42 @@
+schemaVersion: 2.2.0
+metadata:
+  name: routeros_batch_devspace
+components:
+  - name: tooling-container
+    container:
+      image: quay.io/jaydbyoo/pymodule-creator-ee:latest
+      memoryRequest: 384M
+      memoryLimit: 8Gi
+      cpuRequest: 250m
+      cpuLimit: 2000m
+      args: ['tail', '-f', '/dev/null']
+commands:
+  - id: oc-install
+    exec:
+      commandLine: '/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/etc/install_oc.yml'
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: true
+      component: tooling-container
+  - id: molecule-test
+    exec:
+      label: "Molecule: Run Scenario for Backup Role"
+      commandLine: 'source $HOME/.bashrc && molecule test'
+      workingDir: ${PROJECTS_ROOT}/routeros_batch/collections/example/collection/roles/backup_file
+      group:
+        kind: run
+        isDefault: true
+      component: tooling-container
+  - id: molecule-verify
+    exec:
+      label: "Molecule: Validate Backup File Role"
+      commandLine: 'source $HOME/.bashrc && molecule verify'
+      workingDir: ${PROJECTS_ROOT}/routeros_batch/collections/example/collection/roles/backup_file
+      group:
+        kind: run
+        isDefault: true
+      component: tooling-container
+events:
+  postStart:
+    - "oc-install"

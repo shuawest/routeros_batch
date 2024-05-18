@@ -1,0 +1,23 @@
+---
+namespace: shuawest
+name: routeros_batch
+version: 0.0.8
+readme: README.md
+authors:
+  - Josh West (github.com/shuawest)
+description: Modules for MikroTik RouterOS idempotent script generation, script execution, and batch fact retrieval
+license_file: COPYING
+dependencies:
+  community.routeros: ">=2.8.0"
+  ansible.netcommon: '>=1.0.0'
+tags:
+  - network
+  - mikrotik
+  - routeros
+  - idempotent
+repository: "https://github.com/shuawest/routeros_script"
+documentation": "https://github.com/shuawest/routeros_script/"
+homepage": "https://github.com/shuawest/routeros_script"
+issues": "https://github.com/shuawest/routeros_script/issues"
+build_ignore: []
+  

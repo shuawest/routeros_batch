@@ -1,0 +1,28 @@
+---
+# Copyright (c) Ansible Project
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+
+- name: Fetch the commands from the test data directory
+  set_fact:
+    example_commands: "{{ lookup('file', '../files/int-example.yaml') | from_yaml }}"
+
+- debug: 
+    var: example_commands
+
+- name: Generate RouterOS script
+  ignore_errors: true
+  shuawest.routeros_batch.scriptgen: 
+    commands: "{{ example_commands }}"
+  register: result
+
+- debug: 
+    var: result
+
+- name: "Verify script generated"
+  assert:
+    that: 
+      - result.failed == false
+      - result.script | length > 1
+

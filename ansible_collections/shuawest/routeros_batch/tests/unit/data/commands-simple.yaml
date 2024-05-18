@@ -1,0 +1,25 @@
+- desc: command A
+  path: interface bridge
+  state: present
+  values:
+    - attr: name
+      value: bridge1
+      mode: both
+    - attr: fast-forward
+      value: no
+- desc: command B
+  path: interface bridge port
+  state: absent
+  values:
+    - attr: bridge
+      value: bridge1
+      mode: both
+    - attr: interface
+      value: interfaceA
+      mode: both
+    - attr: hw
+      value: no
+- desc: invalid command
+  path: fake path
+  state: present
+  values: []

@@ -1,0 +1,223 @@
+- desc: Put VPN bridge 'bridge'
+  path: /interface bridge
+  state: present
+  values:
+    - attr: name
+      value: bridge
+      mode: both
+    - attr: fast-forward
+      value: no
+- desc: Put port 'ether2' to bridge 'bridge'
+  path: /interface bridge port
+  state: present
+  values:
+    - attr: bridge
+      value: bridge
+      mode: both
+    - attr: interface
+      value: ether2
+      mode: both
+    - attr: hw
+      value: no
+- desc: Configure SNMP
+  path: /snmp community
+  state: present
+  values:
+    - attr: default
+      value: 'yes'
+      mode: both
+    - attr: addresses
+      value:  0.0.0.0/0
+- desc: Put DHCP pool 'vpn-pool'
+  path: /ip pool
+  state: present
+  values:
+    - attr: name
+      value: vpn-pool
+      mode: both
+    - attr: ranges
+      value: 172.16.100.2-172.16.100.254
+- desc: Put IPSEC peer
+  path: /ip ipsec peer
+  state: present
+  values:
+    - attr: name
+      value: l2tpserver
+      mode: both
+    - attr: passive
+      value: 'yes'
+- desc: Set IPSEC encryption algorithem to 3des
+  path: /ip ipsec proposal
+  state: present
+  values:
+    - attr: default
+      value: 'yes'
+      mode: both
+    - attr: enc-algorithms
+      value: 3des
+- desc: Put IPSEC mode config for address pool 'vpn-pool'
+  path: /ip ipsec mode-config
+  state: present
+  values:
+    - attr: name
+      value: cfg1
+      mode: both
+    - attr: address-pool
+      value: vpn-pool
+    - attr: static-dns
+      value: 8.8.8.8
+    - attr: system-dns
+      value: 'no'
+- desc: Put PPP profile 'profile-vpn'
+  path: /ppp profile
+  state: present
+  values:
+    - attr: name
+      value: profile-vpn
+      mode: both
+    - attr: bridge
+      value: bridge
+    - attr: local-address
+      value: vpn-pool
+    - attr: remote-address
+      value: vpn-pool
+- desc: Put PPP profile 'ipsec_vpn'
+  path: /ppp profile
+  state: present
+  values:
+    - attr: name
+      value: ipsec_vpn
+      mode: both
+    - attr: bridge
+      value: bridge
+    - attr: dns-server
+      value: 8.8.8.8
+    - attr: local-address
+      value: vpn-pool
+    - attr: remote-address
+      value: vpn-pool
+- desc: Configure L2TP server
+  path: /interface l2tp-server server
+  state: present
+  values:
+    - attr: authentication
+      value: mschap1,mschap2
+    - attr: default-profile
+      value: ipsec_vpn
+    - attr: enabled
+      value: 'yes'
+- desc: Put ipsec-esp firewall filter
+  path: /ip firewall filter
+  state: present
+  values:
+    - attr: action
+      value: accept
+      mode: both
+    - attr: chain
+      value: input
+      mode: both
+    - attr: protocol
+      value: ipsec-esp
+      mode: both
+- desc: Put srcnat masquerade firewall NAT
+  path: /ip firewall nat
+  state: present
+  values:
+    - attr: action
+      value: masquerade
+      mode: both
+    - attr: chain
+      value: srcnat
+      mode: both
+    - attr: out-interface
+      value: bridge
+      mode: both
+    - attr: src-address
+      value: 72.16.100.2-172.16.100.254
+- desc: Put srcnat firewall NAT
+  path: /ip firewall nat
+  state: present
+  values:
+    - attr: action
+      value: accept
+      mode: both
+    - attr: chain
+      value: srcnat
+      mode: both
+- desc: Put IPSEC server identity secret
+  path: /ip ipsec identity
+  state: present
+  values:
+    - attr: generate-policy
+      value: port-override
+      mode: both
+    - attr: peer
+      value: l2tpserver
+      mode: both
+    - attr: secret
+      value: BD3NzaC1lZDI1NTE5AAAAIBuFKOoWGY4u25UR5ACPptmaETgB65nsdBCgGPuGQFlL
+- desc: Add VPN user
+  path: /ppp secret
+  state: present
+  values:
+    - attr: name
+      value: admin
+      mode: both
+    - attr: password
+      value: asdfASDF
+    - attr: profile
+      value: profile-vpn
+    - attr: service
+      value: any
+- desc: Add VPN user 'admin'
+  path: /ppp secret
+  state: present
+  values:
+    - attr: name
+      value: admin
+      mode: both
+    - attr: password
+      value: asdfASDF
+    - attr: profile
+      value: profile-vpn
+    - attr: service
+      value: any
+- desc: Add VPN user 'myuser'
+  path: /ppp secret
+  state: present
+  values:
+    - attr: name
+      value: myuser
+      mode: both
+    - attr: password
+      value: asdfASDF
+    - attr: profile
+      value: profile-vpn
+    - attr: service
+      value: any
+- desc: Add VPN user 'ansible'
+  path: /ppp secret
+  state: present
+  values:
+    - attr: name
+      value: ansible
+      mode: both
+    - attr: password
+      value: asdfASDF
+    - attr: profile
+      value: profile-vpn
+    - attr: service
+      value: any
+- desc: Add VPN user 'guest'
+  path: /ppp secret
+  state: absent
+  values:
+    - attr: name
+      value: guest
+      mode: both
+    - attr: password
+      value: 'asdfASDF'
+    - attr: profile
+      value: profile-vpn
+    - attr: service
+      value: any

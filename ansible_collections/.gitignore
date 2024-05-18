@@ -1,0 +1,4 @@
+ansible/
+ansible.*
+community/
+community.*
