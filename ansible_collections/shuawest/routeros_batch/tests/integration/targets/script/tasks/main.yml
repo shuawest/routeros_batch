@@ -136,3 +136,52 @@
       # a bad attribute is only caught during script execution, 
       # so replacing the script should signal the target device was changed
       - bad_attribute_int_test.changed == true   
+
+- name: Fail test - invalid connection
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_invalid_connection_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      baduser: baduser
+      wrongpass: badpassword
+      onlyhost: 192.168.100.100
+    content: |
+      /system identity print
+      /system resource print
+  register: bad_invalid_connection_int_test
+
+- debug: 
+    var: bad_invalid_connection_int_test
+- name: "Fail test - invalid connection"
+  assert:
+    that: 
+      # failure should be caught during argument validation
+      - bad_invalid_connection_int_test.failed == true
+      # if you can't connect, you can't change the target device
+      - bad_invalid_connection_int_test.changed == false   
+
+- name: Fail test - bad connection
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_connect_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      username: baduser
+      password: badpassword
+      hostname: 192.168.100.100
+    content: |
+      /system identity print
+      /system resource print
+  register: bad_connect_int_test
+
+- debug: 
+    var: bad_connect_int_test
+- name: "Fail test - bad connection"
+  assert:
+    that: 
+      - bad_connect_int_test.failed == true
+      # if you can't connect, you can't change the target device
+      - bad_connect_int_test.changed == false   
