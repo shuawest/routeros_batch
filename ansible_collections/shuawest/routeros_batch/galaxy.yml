@@ -15,9 +15,9 @@ tags:
   - mikrotik
   - routeros
   - idempotent
-repository: "https://github.com/shuawest/routeros_script"
-documentation": "https://github.com/shuawest/routeros_script/"
-homepage": "https://github.com/shuawest/routeros_script"
-issues": "https://github.com/shuawest/routeros_script/issues"
+repository: "https://github.com/shuawest/routeros_batch"
+documentation": "https://github.com/shuawest/routeros_batch/"
+homepage": "https://github.com/shuawest/routeros_batch"
+issues": "https://github.com/shuawest/routeros_batch/issues"
 build_ignore: []
   
