@@ -33,6 +33,22 @@ KEY_ATTR = "attr"
 KEY_VALUE = "value"
 
 
+def get_routeros_spec():
+    routeros=dict(type='dict', required=True, options={
+        'username': dict(type='str', required=True),
+        'password': dict(type='str', required=True, no_log=True),
+        'hostname': dict(type='str', required=True),
+        'port': dict(type='int'),
+        'tls': dict(type='bool', default=False, aliases=['ssl']),
+        'force_no_cert': dict(type='bool', default=False),
+        'validate_certs': dict(type='bool', default=True),
+        'validate_cert_hostname': dict(type='bool', default=False),
+        'ca_path': dict(type='path'),
+        'encoding': dict(type='str', default='ASCII'),
+        'timeout': dict(type='int', default=10),
+    })
+    return routeros
+
 def get_spec(is_commands_required=False):
     commands=dict(type='list', elements='dict', required=is_commands_required, options={
             KEY_DESC: dict(type='str', required=True),

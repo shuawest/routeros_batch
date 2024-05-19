@@ -53,19 +53,7 @@ def get_argument_spec():
             ScriptState.EXECUTED_CLEAN.value]),
         content=dict(type='str', required=False),
         commands=cmd_spec.get_spec(False),
-        routeros=dict(type='dict', required=True), options={
-            'username': dict(type='str', required=True),
-            'password': dict(type='str', required=True, no_log=True),
-            'hostname': dict(type='str', required=True),
-            'port': dict(type='int'),
-            'tls': dict(type='bool', default=False, aliases=['ssl']),
-            'force_no_cert': dict(type='bool', default=False),
-            'validate_certs': dict(type='bool', default=True),
-            'validate_cert_hostname': dict(type='bool', default=False),
-            'ca_path': dict(type='path'),
-            'encoding': dict(type='str', default='ASCII'),
-            'timeout': dict(type='int', default=10),
-        },
+        routeros=cmd_spec.get_routeros_spec(),
     )
     return argument_spec
 
