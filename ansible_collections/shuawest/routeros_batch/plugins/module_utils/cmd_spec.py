@@ -11,6 +11,7 @@ class PathType(Enum):
     LOOKUP = "lookup"
     LIST = "list"
     ITEM = "item"
+    UNRECOGNIZED = "unrecognized"
 
 class ValueMode(Enum):
     SET = "set"
@@ -80,24 +81,36 @@ def commands_to_script(commands):
         rsc_script += cmd_script + "\n\n"
     return rsc_script
 
+
 def command_to_script(command):
     script = "; ### %s: %s ### ;\n\n" % (command[KEY_STATE], command[KEY_DESC])
 
+    path = command[KEY_PATH]
     path_type = command[KEY_PATH_TYPE]
+
     if path_type == PathType.LOOKUP.value:
-        path = command[KEY_PATH]
-        if path in ros_paths.ROUTEROS_ITEM_PATHS or "/"+path in ros_paths.ROUTEROS_ITEM_PATHS:
-            script += item_command_to_script(command)
-        elif path in ros_paths.ROUTEROS_LIST_PATHS or "/"+path in ros_paths.ROUTEROS_LIST_PATHS:
-            script += list_command_to_script(command)
-        else:
+        path_type = lookup_path_type(path)
+        if path_type == PathType.UNRECOGNIZED.value:
             raise Exception("Unrecognized path: path '%s' is not recognized as a item or list path in the lookup. Check that the path is correct. If it is correct, then set the command path_type to 'item' or 'list'." % path)
-    elif path_type == PathType.ITEM.value:
+        
+    if path_type == PathType.ITEM.value:
         script += item_command_to_script(command)
     elif path_type == PathType.LIST.value:
         script += list_command_to_script(command)
 
     return script
+
+def lookup_path_type(path):
+    is_item_path = path in ros_paths.ROUTEROS_ITEM_PATHS or "/"+path in ros_paths.ROUTEROS_ITEM_PATHS
+    if is_item_path:
+        return PathType.ITEM.value   
+    
+    is_list_path = path in ros_paths.ROUTEROS_LIST_PATHS or "/"+path in ros_paths.ROUTEROS_LIST_PATHS
+    if is_list_path:
+        return PathType.LIST.value
+
+    return PathType.UNRECOGNIZED.value        
+
 
 def item_command_to_script(command):
     value_keypairs = command_value_keypairs(command)

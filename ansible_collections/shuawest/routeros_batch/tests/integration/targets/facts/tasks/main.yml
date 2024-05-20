@@ -11,6 +11,8 @@
       username: admin
       password: asdfASDF
       hostname: 192.168.1.11
+    include_null: true
+    as_keyvalue: true
     paths: 
       - name: bridges       
         path: interface bridge
