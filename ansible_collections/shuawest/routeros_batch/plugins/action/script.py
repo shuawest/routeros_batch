@@ -39,6 +39,10 @@ class ScriptState(Enum):
     EXECUTED_ONCE = "executed_once"
     EXECUTED_CLEAN = "executed_clean"
 
+NO_CONTENT_STATES = [ScriptState.ABSENT.value, ScriptState.EXECUTED.value]
+EXECUTED_STATES = [ScriptState.EXECUTED.value, ScriptState.EXECUTED_ONCE.value, ScriptState.EXECUTED_CLEAN.value]
+        
+
 def get_argument_spec():
     # routeros vars from https://docs.ansible.com/ansible/latest/collections/community/routeros/api_module.html
     argument_spec = dict(
@@ -59,6 +63,8 @@ def get_argument_spec():
 
 class ActionModule(ActionBase):
 
+    
+
     def run(self, tmp=None, task_vars=None):
         if task_vars is None:
             task_vars = dict()
@@ -73,8 +79,11 @@ class ActionModule(ActionBase):
         try: 
             output = self.process(new_module_args, task_vars)
             return output
-        except Exception as e:
-            output = dict(failed=True, changed=False, msg=str(e), execption=e)
+        except AnsibleError as ansible_err:
+            output = dict(failed=True, changed=False, err_msg=str(ansible_err), exception=ansible_err)
+            return output
+        except Exception as exception:
+            output = dict(failed=True, changed=False, err_msg=str(exception))
             return output
 
 
@@ -92,7 +101,8 @@ class ActionModule(ActionBase):
         rsc_script = ""
         is_commands = False
         if not content and not commands:
-            raise AnsibleActionFail("Either content or commands must be provided")
+            if not state in NO_CONTENT_STATES:
+                raise AnsibleActionFail("Either content or commands must be provided")
         elif content and commands:
             raise AnsibleActionFail("Either content or commands must be provided, not both")
         elif content:
@@ -207,10 +217,16 @@ def _process_script_output(context, name, state, rsc_script, is_commands=False, 
         add_msg = _step_msg(context, CTX_ADD)
         if remove_changed and add_changed:
             output[KEY_REPLACED] = True
-            output[KEY_REPLACED_MSG] = "Script '%s' was replaced: %s; %s" % (name, remove_msg, add_msg)
+            msg = "Script '%s' was replaced: %s; %s" % (name, remove_msg, add_msg)
+            if state == ScriptState.PRESENT.value:
+                output[KEY_MSG] = msg
+            output[KEY_REPLACED_MSG] = msg
         elif not remove_changed and add_changed:
             output[KEY_REPLACED] = True
-            output[KEY_REPLACED_MSG] = "Script '%s' was added, a script with the same name was not present prior: %s" % (name, add_msg)
+            msg = "Script '%s' was added, a script with the same name was not present prior: %s" % (name, add_msg)
+            if state == ScriptState.PRESENT.value:
+                output[KEY_MSG] = msg
+            output[KEY_REPLACED_MSG] = msg
         elif remove_changed and not add_changed:
             output[KEY_REPLACED] = False
             output[KEY_REPLACED_MSG] = "Script '%s' was partially replaced. It was removed but failed to add during replace.\nremoved: %s\nadded: %s" % (name, remove_msg, add_msg)
@@ -226,8 +242,7 @@ def _process_script_output(context, name, state, rsc_script, is_commands=False, 
             output[KEY_MSG] = "Failed to add script '%s': %s" % (name, add_err_msg)
 
         # exec result
-        executed_states = [ScriptState.EXECUTED.value, ScriptState.EXECUTED_ONCE.value, ScriptState.EXECUTED_CLEAN.value]
-        if not add_failed and state in executed_states:
+        if not add_failed and state in EXECUTED_STATES:
             exec_failed = _step_failed(context, CTX_EXEC)
             if exec_failed: 
                 failed = True
@@ -250,6 +265,17 @@ def _process_script_output(context, name, state, rsc_script, is_commands=False, 
                 else:
                     changed = True
                     output[KEY_CLEAN_MSG] = "Removed script '%s' after execution" % name
+    else:
+        # remove result
+        remove_failed = _step_failed(context, CTX_REMOVE)
+        if remove_failed:
+            failed = True
+            remove_err_msg = _step_msg(context, CTX_REMOVE)
+            output[KEY_MSG] = "Failed to remove script '%s': %s" % (name, remove_err_msg)
+        else:
+            changed = True
+            output[KEY_MSG] = "Removed script '%s'" % name
+
 
     # set the final negotiation flags
     output[KEY_FAILED] = failed

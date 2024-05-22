@@ -4,30 +4,6 @@
 # # SPDX-License-Identifier: GPL-3.0-or-later
 
 
-# - name: Test content script execution against Mikrotik RouterOS
-#   ignore_errors: true
-#   shuawest.routeros_batch.script: 
-#     name: "output_capture_test"
-#     comment: "added by ansible routeros_batch.script integration test"     
-#     verbose_steps: true
-#     state: executed_once
-#     routeros:
-#       username: admin
-#       password: asdfASDF
-#       hostname: 192.168.1.11
-#     content: |
-#       {
-#         /log info \"trying to capture script output in console output or logs\"
-#         :global logIdentity \" $[/system identity print as-value] \"
-#         :put $logIdentity
-#         /log info \"$logIdentity\" 
-#         :put \"$[ /system identity print as-value ]\"
-#       }
-#   register: script_content_int_test
-
-# - debug: 
-#     var: script_content_int_test
-
 - name: Test content script execution against Mikrotik RouterOS
   ignore_errors: true
   shuawest.routeros_batch.script: 
@@ -50,7 +26,8 @@
     that: 
       - script_content_int_test.failed == false
       - script_content_int_test.changed == true
-      - script_content_int_test.script | length > 1
+      - script_content_int_test.script | length > 10
+      - "'Executed script ' in script_content_int_test.msg"
 
 
 - name: Test command generation against Mikrotik RouterOS
@@ -94,7 +71,8 @@
     that: 
       - script_command_int_test.failed == false
       - script_command_int_test.changed == true
-      - script_command_int_test.script | length > 1
+      - script_command_int_test.script | length > 10
+      - "'Executed script ' in script_command_int_test.msg"
 
 - name: Fail test - bad path
   ignore_errors: true
@@ -127,6 +105,8 @@
       # an unrecognized path without a path type is caught by the module, 
       # so it should not change the target device
       - bad_path_int_test.changed == false 
+      # check the output error message 
+      - "'Unrecognized path:' in bad_path_int_test.err_msg" 
 
 
 - name: Fail test - bad attribute
@@ -159,7 +139,9 @@
       - bad_attribute_int_test.failed == true
       # a bad attribute is only caught during script execution, 
       # so replacing the script should signal the target device was changed
-      - bad_attribute_int_test.changed == true   
+      - bad_attribute_int_test.changed == true  
+      # check the output error message 
+      - "'Failed to execute script' in bad_attribute_int_test.msg"  
 
 - name: Fail test - invalid connection
   ignore_errors: true
@@ -185,7 +167,9 @@
       # failure should be caught during argument validation
       - bad_invalid_connection_int_test.failed == true
       # if you can't connect, you can't change the target device
-      - bad_invalid_connection_int_test.changed == false   
+      - bad_invalid_connection_int_test.changed == false  
+      # check the output error message 
+      - "'missing required arguments' in bad_invalid_connection_int_test.msg" 
 
 - name: Fail test - bad connection
   ignore_errors: true
@@ -210,4 +194,108 @@
     that: 
       - bad_connect_int_test.failed == true
       # if you can't connect, you can't change the target device
-      - bad_connect_int_test.changed == false   
+      - bad_connect_int_test.changed == false  
+      # check the output error message 
+      - "'Error while connecting: timed out' in bad_connect_int_test.msg"
+
+
+- name: Add script
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "addremove_int_test"
+    # comment: "added by ansible routeros_batch.script integration test"     
+    verbose_steps: false
+    state: present
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    content: |
+      /system identity print
+      /system resource print
+  register: add_int_test
+
+- debug: 
+    var: add_int_test
+
+
+- name: Remove script
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "addremove_int_test"
+    verbose_steps: true
+    state: absent
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+  register: remove_int_test
+
+- debug: 
+    var: remove_int_test
+
+- assert:
+    that: 
+      - add_int_test.failed == false
+      - remove_int_test.failed == false
+      - add_int_test.changed == true
+      - remove_int_test.changed == true
+      # check the output messages
+      - "'Script' in add_int_test.msg and ' was ' in add_int_test.msg"
+      - "'Removed script ' in remove_int_test.msg"
+
+- name: Clean out prior integration test scripts by name
+  ignore_errors: true
+  loop_control:
+    loop_var: script_name
+  loop: 
+  - script_content_int_test
+  - script_command_int_test
+  - bad_path_int_test
+  - bad_attribute_int_test
+  - bad_invalid_connection_int_test
+  - bad_connect_int_test
+  - addremove_int_test
+  - myroscript
+  - rsc1
+  - rsc2
+  - rsc3
+  - rsc4
+  - rsc5
+  - output_test
+  - rosapi_inttest
+  - rosapi_int_command_test
+  - rosapi_int_content_test
+  shuawest.routeros_batch.script: 
+    name: "{{ script_name }}"
+    verbose_steps: false
+    state: absent
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+
+
+# - name: Experiment with script output / log capture
+#   ignore_errors: true
+#   shuawest.routeros_batch.script: 
+#     name: "output_capture_test"
+#     comment: "added by ansible routeros_batch.script integration test"     
+#     verbose_steps: true
+#     state: executed_once
+#     routeros:
+#       username: admin
+#       password: asdfASDF
+#       hostname: 192.168.1.11
+#     content: |
+#       {
+#         /log info \"trying to capture script output in console output or logs\"
+#         :global logIdentity \" $[/system identity print as-value] \"
+#         :put $logIdentity
+#         /log info \"$logIdentity\" 
+#         :put \"$[ /system identity print as-value ]\"
+#       }
+#   register: script_content_int_test
+
+# - debug: 
+#     var: script_content_int_test
