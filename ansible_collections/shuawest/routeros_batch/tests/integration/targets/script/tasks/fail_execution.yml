@@ -1,0 +1,65 @@
+---
+
+
+
+- name: Fail test - bad attribute
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_attribute_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    commands: 
+    - desc: Put VPN bridge 'bridge'
+      path: /interface bridge
+      state: present
+      values:
+      - attr: fake_attr
+        value: bridge
+        mode: both
+      - attr: fast-forward
+        value: no
+  register: bad_attribute_int_test
+
+- debug: 
+    var: bad_attribute_int_test
+- name: "Fail test - bad path"
+  assert:
+    that: 
+      - bad_attribute_int_test.failed == true
+      # a bad attribute is only caught during script execution, 
+      # so replacing the script should signal the target device was changed
+      - bad_attribute_int_test.changed == true  
+      # check the output error message 
+      - "'Failed to execute script' in bad_attribute_int_test.msg"  
+
+
+- name: Fail test - bad connection
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_connect_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    verbose_steps: false
+    state: executed_clean
+    routeros:
+      username: baduser
+      password: badpassword
+      hostname: 192.168.100.100
+    content: |
+      /system identity print
+      /system resource print
+  register: bad_connect_int_test
+
+- debug: 
+    var: bad_connect_int_test
+- name: "Fail test - bad connection"
+  assert:
+    that: 
+      - bad_connect_int_test.failed == true
+      # if you can't connect, you can't change the target device
+      - bad_connect_int_test.changed == false  
+      # check the output error message 
+      - "'Error while connecting: timed out' in bad_connect_int_test.msg"

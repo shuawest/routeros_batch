@@ -1,0 +1,68 @@
+---
+
+
+
+- name: Fail test - bad path
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_path_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    commands: 
+    - desc: Put VPN bridge 'bridge'
+      path: /BadPathinterface bridge
+      state: present
+      values:
+      - attr: name
+        value: bridge
+        mode: both
+      - attr: fast-forward
+        value: no
+  register: bad_path_int_test
+
+- debug: 
+    var: bad_path_int_test
+- name: "Fail test - bad path"
+  assert:
+    that: 
+      - bad_path_int_test.failed == true
+      # an unrecognized path without a path type is caught by the module, 
+      # so it should not change the target device
+      - bad_path_int_test.changed == false 
+      # check the output error message 
+      - "'Unrecognized path:' in bad_path_int_test.err_msg" 
+
+
+- name: Fail test - invalid connection
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "bad_invalid_connection_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    verbose_steps: false
+    state: executed_clean
+    routeros:
+      baduser: baduser
+      wrongpass: badpassword
+      onlyhost: 192.168.100.100
+    content: |
+      /system identity print
+      /system resource print
+  register: bad_invalid_connection_int_test
+
+- debug: 
+    var: bad_invalid_connection_int_test
+- name: "Fail test - invalid connection"
+  assert:
+    that: 
+      # failure should be caught during argument validation
+      - bad_invalid_connection_int_test.failed == true
+      # if you can't connect, you can't change the target device
+      - bad_invalid_connection_int_test.changed == false  
+      # check the output error message 
+      - "'missing required arguments' in bad_invalid_connection_int_test.msg" 
+
+

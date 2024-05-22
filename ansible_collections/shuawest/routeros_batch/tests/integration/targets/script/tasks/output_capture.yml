@@ -1,0 +1,26 @@
+---
+
+
+- name: Experiment with script output / log capture
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "output_capture_test"
+    comment: "added by ansible routeros_batch.script integration test"     
+    verbose_steps: true
+    state: executed_once
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    content: |
+      {
+        /log info \"trying to capture script output in console output or logs\"
+        :global logIdentity \" $[/system identity print as-value] \"
+        :put $logIdentity
+        /log info \"$logIdentity\" 
+        :put \"$[ /system identity print as-value ]\"
+      }
+  register: script_content_int_test
+
+- debug: 
+    var: script_content_int_test

@@ -7,7 +7,6 @@ NOTE: This collection is not supported - use at your own risk
 # TODO
  
 - add document generation and document to galaxy levels
-- separate integration tests into task files
 - add removal of field values (! & null) in the commands
 - execution validation:
   - determine if it's possible to capture console output of a ros script 
@@ -18,7 +17,7 @@ NOTE: This collection is not supported - use at your own risk
 - build unit testing with mocks for action modules 
 - setup mini mtk router to have 192.168.1.11 ip address for testing while traveling
 
-
+X separate integration tests into task files
 X fix catching of exceptions - when failed flag is true, the module should report a failure and error
 X Add community.routeros as dependency of shuawest.routeros_batch
 X create class that derives ROS_api_module to add, remove, and execute scripts in a module as they are in milabs-depict-ansible

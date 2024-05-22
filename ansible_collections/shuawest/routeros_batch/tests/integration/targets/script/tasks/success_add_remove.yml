@@ -1,0 +1,47 @@
+---
+
+
+- name: Add script
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "addremove_int_test"
+    # comment: "added by ansible routeros_batch.script integration test"     
+    verbose_steps: false
+    state: present
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    content: |
+      /system identity print
+      /system resource print
+  register: add_int_test
+
+- debug: 
+    var: add_int_test
+
+
+- name: Remove script
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "addremove_int_test"
+    verbose_steps: true
+    state: absent
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+  register: remove_int_test
+
+- debug: 
+    var: remove_int_test
+
+- assert:
+    that: 
+      - add_int_test.failed == false
+      - remove_int_test.failed == false
+      - add_int_test.changed == true
+      - remove_int_test.changed == true
+      # check the output messages
+      - "'Script' in add_int_test.msg and ' was ' in add_int_test.msg"
+      - "'Removed script ' in remove_int_test.msg"

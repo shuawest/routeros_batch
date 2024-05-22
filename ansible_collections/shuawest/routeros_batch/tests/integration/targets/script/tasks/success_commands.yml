@@ -1,0 +1,47 @@
+---
+
+
+- name: Test command generation against Mikrotik RouterOS
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "script_command_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_clean
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+    commands: 
+    - desc: Put VPN bridge 'bridge'
+      path: /interface bridge
+      state: present
+      values:
+      - attr: name
+        value: bridge
+        mode: both
+      - attr: fast-forward
+        value: no
+    - desc: Remove VPN user 'guest'
+      path: /ppp secret
+      state: absent
+      values:
+      - attr: name
+        value: guest
+        mode: both
+      - attr: password
+        value: 'asdfASDF'
+      - attr: profile
+        value: profile-vpn
+      - attr: service
+        value: any
+  register: script_command_int_test
+
+- debug: 
+    var: script_command_int_test
+- assert:
+    that: 
+      - script_command_int_test.failed == false
+      - script_command_int_test.changed == true
+      - script_command_int_test.script | length > 10
+      - "'Executed script ' in script_command_int_test.msg"
+
