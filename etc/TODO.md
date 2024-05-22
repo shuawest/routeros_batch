@@ -17,6 +17,7 @@ NOTE: This collection is not supported - use at your own risk
 - build unit testing with mocks for action modules 
 - setup mini mtk router to have 192.168.1.11 ip address for testing while traveling
 
+X increase minor version of module and release
 X separate integration tests into task files
 X fix catching of exceptions - when failed flag is true, the module should report a failure and error
 X Add community.routeros as dependency of shuawest.routeros_batch
