@@ -1,0 +1,34 @@
+---
+
+
+- name: Clean out prior integration test scripts by name
+  ignore_errors: true
+  loop_control:
+    loop_var: script_name
+  loop: 
+  - script_content_int_test
+  - script_command_int_test
+  - bad_path_int_test
+  - bad_attribute_int_test
+  - bad_invalid_connection_int_test
+  - bad_connect_int_test
+  - addremove_int_test
+  - myroscript
+  - rsc1
+  - rsc2
+  - rsc3
+  - rsc4
+  - rsc5
+  - output_test
+  - rosapi_inttest
+  - rosapi_int_command_test
+  - rosapi_int_content_test
+  shuawest.routeros_batch.script: 
+    name: "{{ script_name }}"
+    verbose_steps: false
+    state: absent
+    routeros:
+      username: admin
+      password: asdfASDF
+      hostname: 192.168.1.11
+
