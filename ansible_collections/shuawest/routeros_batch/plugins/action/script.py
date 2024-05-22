@@ -242,13 +242,12 @@ def _process_script_output(context, name, state, rsc_script, is_commands=False, 
         # clean result
         if state == ScriptState.EXECUTED_CLEAN.value: 
             clean_failed = _step_failed(context, CTX_CLEAN)
-            if clean_failed: 
+            if clean_failed or failed: 
                 failed = True
                 script_err_message = _step_msg(context, CTX_CLEAN)
                 output[KEY_CLEAN_MSG] = "Failed to clean up script '%s' after execution. Review the script and device for any issues. Error: %s" % (name, script_err_message)
             else:
                 changed = True
-                output[KEY_MSG] = "Added, executed, and removed script '%s'" % name
                 output[KEY_CLEAN_MSG] = "Removed script '%s' after execution" % name
 
     # set the final negotiation flags
