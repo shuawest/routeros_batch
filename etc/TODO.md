@@ -6,23 +6,25 @@ NOTE: This collection is not supported - use at your own risk
 
 # TODO
  
-- fix catching of exceptions - when failed flag is true, the module should report a failure and error
 - add document generation and document to galaxy levels
-- consider a reconcile module that uses commands to generate and execute a script, then compare the batch fetch of the paths
-to validate settings. 
+- separate integration tests into task files
 - add removal of field values (! & null) in the commands
-- determine if it's possible to capture console output of a ros script
-- determine if it's possible to have scripts output logs 
+- execution validation:
+  - determine if it's possible to capture console output of a ros script 
+  - determine if it's possible to have scripts output logs
+  - determine if there is a way to scrape the schema data points from the device
+  - consider a reconcile module that uses commands to generate and execute a script, then compare the batch fetch of the paths
+  to validate settings. 
 - build unit testing with mocks for action modules 
-- determine if there is a way to srape the schema data points from the device
+- setup mini mtk router to have 192.168.1.11 ip address for testing while traveling
 
 
+X fix catching of exceptions - when failed flag is true, the module should report a failure and error
 X Add community.routeros as dependency of shuawest.routeros_batch
 X create class that derives ROS_api_module to add, remove, and execute scripts in a module as they are in milabs-depict-ansible
   X determine if extending or composing api module is appropriate
 X test module with integration tests 
 X create batch_facts module that extends ROS_api_info module to reach list of facts and return results in structured format
-- setup mini mtk router to have 192.168.1.11 ip address for testing while traveling
 
 # Research
 - Call an ansible module from a module
