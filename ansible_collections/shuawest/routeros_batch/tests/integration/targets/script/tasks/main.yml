@@ -166,7 +166,7 @@
   shuawest.routeros_batch.script: 
     name: "bad_invalid_connection_int_test"
     comment: "added by ansible routeros_batch.script integration test" 
-    verbose_steps: true
+    verbose_steps: false
     state: executed_clean
     routeros:
       baduser: baduser
@@ -192,7 +192,7 @@
   shuawest.routeros_batch.script: 
     name: "bad_connect_int_test"
     comment: "added by ansible routeros_batch.script integration test" 
-    verbose_steps: true
+    verbose_steps: false
     state: executed_clean
     routeros:
       username: baduser

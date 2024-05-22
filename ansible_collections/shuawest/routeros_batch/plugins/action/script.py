@@ -225,30 +225,31 @@ def _process_script_output(context, name, state, rsc_script, is_commands=False, 
             add_err_msg = _step_msg(context, CTX_ADD)
             output[KEY_MSG] = "Failed to add script '%s': %s" % (name, add_err_msg)
 
-    # exec result
-    if state == ScriptState.EXECUTED.value or state == ScriptState.EXECUTED_ONCE.value or state == ScriptState.EXECUTED_CLEAN.value:
-        exec_failed = _step_failed(context, CTX_EXEC)
-        if exec_failed: 
-            failed = True
-            script_err_message = _step_msg(context, CTX_EXEC)
-            if is_commands:  
-                output[KEY_MSG] = "Failed to execute script '%s' generated from commands. Review the generated script, checking the attribute names and values are correct. Error: %s" % (name, script_err_message)
-            else:
-                output[KEY_MSG] = "Failed to execute content in '%s' script: %s" % (name, script_err_message)
-        else:
-            changed = True
-            output[KEY_MSG] = "Executed script '%s'" % name
-
-        # clean result
-        if state == ScriptState.EXECUTED_CLEAN.value: 
-            clean_failed = _step_failed(context, CTX_CLEAN)
-            if clean_failed or failed: 
+        # exec result
+        executed_states = [ScriptState.EXECUTED.value, ScriptState.EXECUTED_ONCE.value, ScriptState.EXECUTED_CLEAN.value]
+        if not add_failed and state in executed_states:
+            exec_failed = _step_failed(context, CTX_EXEC)
+            if exec_failed: 
                 failed = True
-                script_err_message = _step_msg(context, CTX_CLEAN)
-                output[KEY_CLEAN_MSG] = "Failed to clean up script '%s' after execution. Review the script and device for any issues. Error: %s" % (name, script_err_message)
+                script_err_message = _step_msg(context, CTX_EXEC)
+                if is_commands:  
+                    output[KEY_MSG] = "Failed to execute script '%s' generated from commands. Review the generated script, checking the attribute names and values are correct. Error: %s" % (name, script_err_message)
+                else:
+                    output[KEY_MSG] = "Failed to execute content in '%s' script: %s" % (name, script_err_message)
             else:
                 changed = True
-                output[KEY_CLEAN_MSG] = "Removed script '%s' after execution" % name
+                output[KEY_MSG] = "Executed script '%s'" % name
+
+            # clean result
+            if state == ScriptState.EXECUTED_CLEAN.value: 
+                clean_failed = _step_failed(context, CTX_CLEAN)
+                if clean_failed or failed: 
+                    failed = True
+                    script_err_message = _step_msg(context, CTX_CLEAN)
+                    output[KEY_CLEAN_MSG] = "Failed to clean up script '%s' after execution. Review the script and device for any issues. Error: %s" % (name, script_err_message)
+                else:
+                    changed = True
+                    output[KEY_CLEAN_MSG] = "Removed script '%s' after execution" % name
 
     # set the final negotiation flags
     output[KEY_FAILED] = failed
