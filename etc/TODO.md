@@ -7,13 +7,14 @@ NOTE: This collection is not supported - use at your own risk
 # TODO
  
 - add document generation and document to galaxy levels
+- add batch fasts integration tests
 - add removal of field values (! & null) in the commands
 - execution validation:
+  - consider a reconcile module that uses commands to generate and execute a script, then compare the batch fetch of the paths
+  to validate settings. 
   - determine if it's possible to capture console output of a ros script 
   - determine if it's possible to have scripts output logs
   - determine if there is a way to scrape the schema data points from the device
-  - consider a reconcile module that uses commands to generate and execute a script, then compare the batch fetch of the paths
-  to validate settings. 
 - build unit testing with mocks for action modules 
 - setup mini mtk router to have 192.168.1.11 ip address for testing while traveling
 
