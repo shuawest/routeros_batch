@@ -15,9 +15,11 @@ NOTE: This collection is not supported - use at your own risk
   - determine if it's possible to capture console output of a ros script 
   - determine if it's possible to have scripts output logs
   - determine if there is a way to scrape the schema data points from the device
+  - explore using ssh to submit commands (facts module limits objects that can be queried)
 - build unit testing with mocks for action modules 
-- setup mini mtk router to have 192.168.1.11 ip address for testing while traveling
 
+
+x setup mini mtk router for testing while traveling
 X increase minor version of module and release
 X separate integration tests into task files
 X fix catching of exceptions - when failed flag is true, the module should report a failure and error

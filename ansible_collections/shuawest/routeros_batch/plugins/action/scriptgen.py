@@ -26,7 +26,7 @@ class ActionModule(ActionBase):
             task_vars = dict()
 
         validation_result, new_module_args = self.validate_argument_spec(
-            argument_spec=get_argument_spec(),
+            argument_spec=get_argument_spec(False),
         )
 
         module = super(ActionModule, self).run(tmp, task_vars)
