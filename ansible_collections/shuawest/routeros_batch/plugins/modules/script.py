@@ -37,11 +37,11 @@ options:
   state:
     description:
       - State of the script for the task execution
-      - O(present) - add or update the script on the default, but not execute it
-      - O(absent) - remove the script from the device
-      - O(executed) - execute script already on the device
-      - O(executed_once) - add or update the script, execute it
-      - O(executed_clean) - add or update the script, execute it, then remove it from the device
+      - `present` - add or update the script on the default, but not execute it
+      - `absent` - remove the script from the device
+      - `executed` - execute script already on the device
+      - `executed_once` - add or update the script, execute it
+      - `executed_clean` - add or update the script, execute it, then remove it from the device
     required: true
     type: str
     choices: [ "present", "absent", "executed", "executed_once", "executed_clean" ]
