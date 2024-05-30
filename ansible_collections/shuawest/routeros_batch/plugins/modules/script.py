@@ -43,13 +43,13 @@ options:
   content:
     description:
       - Direct content to add to the script
-      - Mutually exclusive with O(commands)
+      - Mutually exclusive with `commands`
     required: false
     type: str
   commands:
     description:
       - List of commands to generate script
-      - Mutually exclusive with O(content)
+      - Mutually exclusive with `content`
     required: false
     type: list
     elements: dict
@@ -90,7 +90,7 @@ options:
           mode:
             description:
               - Mode to use for this attribute value in the script
-              - Refer to the routeros_batch.scriptgen module for more information
+              - Refer to the `routeros_batch.scriptgen` module for more information
   routeros:
     description:
       - Connection details to the Mikrotik RouterOS device
