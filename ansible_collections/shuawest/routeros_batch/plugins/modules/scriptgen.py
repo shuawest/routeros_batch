@@ -5,14 +5,13 @@ DOCUMENTATION = '''
 module: scriptgen
 author: 
 - Josh West (@shuawest)
-short_description: Generate Mikrotik RouterOS idempotent script to modify configuration
+short_description: Generate Mikrotik RouterOS script to modify configuration with idempotent configuration
 version_added: "0.1"
 description:
   - Generates a routeros script to reconcile configuration objects and parameters using a set of command objects.
 extends_documentation_fragment: []
 attributes:
   platform:
-    support: full
     platforms: RouterOS
 options:
   commands:
@@ -134,20 +133,18 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-"result": {
-    "changed": true,
-    "failed": false,
-    "meta": {
-        "input": [...],
-        "script": "
-            ; ### present: Put VPN bridge 'bridge1' ### ;
+---
+script:
+  description: Generate rsc script content
+  type: string
+  returned: always
+  sample: 
+  - | 
+      ; ### present: Put VPN bridge 'bridge1' ### ;
 
-            :if ([:len [/interface bridge find name=bridge1 ]] > 0) do={
-                    /interface bridge set [ find name=bridge1 ] name=bridge fast-forward=no 
-            } else={
-                    /interface bridge add name=bridge1 fast-forward=no 
-            }
-        "
-    }
-}
+      :if ([:len [/interface bridge find name=bridge1 ]] > 0) do={
+              /interface bridge set [ find name=bridge1 ] name=bridge fast-forward=no 
+      } else={
+              /interface bridge add name=bridge1 fast-forward=no 
+      }
 '''
