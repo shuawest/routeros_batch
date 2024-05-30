@@ -41,3 +41,11 @@ X create batch_facts module that extends ROS_api_info module to reach list of fa
 
 - Action plugin - how to write
   https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#action-plugins 
+
+# Removed from docs
+
+      - `present` - add or update the script on the default, but not execute it
+      - `absent` - remove the script from the device
+      - `executed` - execute script already on the device
+      - `executed_once` - add or update the script, execute it
+      - `executed_clean` - add or update the script, execute it, then remove it from the device
