@@ -34,7 +34,6 @@ options:
       - Show the result of each individual step in the output
     required: false
     type: bool
-    default: false
   state:
     description:
       - State of the script for the task execution
@@ -74,7 +73,6 @@ options:
         description:
           - State of the configuration object
         required: true
-        default: "present"
         type: str
         choices: [ "present", "absent" ]
       values:
