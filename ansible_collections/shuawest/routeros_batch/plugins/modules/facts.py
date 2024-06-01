@@ -8,12 +8,12 @@ author:
 short_description: Fetch facts with a list of paths using the Mikrotik RouterOS api
 description: 
 - Batch fetch facts from the device using a list of paths
-- Uses the community.routeros.api_facts module to interact with the Mikrotik RouterOS API
-- C(routeros) provides the connection details to the device following the community.routeros.api_facts module paramters
+- Uses the C(community.routeros.api_facts) module to interact with the Mikrotik RouterOS API
+- C(routeros) provides the connection details to the device following the C(community.routeros.api_facts) module paramters
 notes:
 - Use O(paths) to fetch facts from the device using a list of paths
 - For list objects it pulls all objects and attributes without a filter
-- Be aware of the amount of data being pulled from the device - use the routeros.api_facts module if more precision is required.
+- Be aware of the amount of data being pulled from the device - use the C(routeros.api_facts) module if more precision is required.
 attributes:
   platform:
     platforms: RouterOS
@@ -50,7 +50,7 @@ options:
   routeros:
     description:
       - Connection details to the device
-      - Refer to the community.routeros.api module parameters for more information
+      - Refer to the C(community.routeros.api) module parameters for more information
     required: true
     type: dict
     suboptions:
