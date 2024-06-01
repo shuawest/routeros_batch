@@ -45,53 +45,53 @@ options:
       - Direct content to add to the script
       - Mutually exclusive with `commands`
     required: false
-    type: str
-''' 
-  # commands:
-  #   description:
-  #     - List of commands to generate script
-  #     - Mutually exclusive with `content`
-  #   required: false
-  #   type: list
-  #   elements: dict
-  #   suboptions:
-  #     desc:
-  #       description:
-  #         - Description of the command
-  #       required: true
-  #       type: str
-#       path:
-#         description:
-#           - Full path to the configuration object
-#         required: true
-#         type: str
-#       state:
-#         description:
-#           - State of the configuration object
-#         required: true
-#         type: str
-#         choices: [ "present", "absent" ]
-#       values:
-#         description:
-#           - List of key-value pairs to set on the configuration object
-#         required: false
-#         type: list
-#         elements: dict
-#         suboptions:
-#           attr:
-#             description:
-#               - Attribute name
-#             required: true
-#             type: str
-#           value:
-#             description:
-#               - Value to set
-#             required: true
-#             type: str
-#           mode:
-#             description:
-#               - Mode to use for this attribute value in the script
-#               - Refer to the `routeros_batch.scriptgen` module for more information
+    type: str 
+  commands:
+    description:
+      - List of commands to generate script
+      - Mutually exclusive with `content`
+    required: false
+    type: list
+    elements: dict
+    suboptions:
+      desc:
+        description:
+          - Description of the command
+        required: true
+        type: str
+      path:
+        description:
+          - Full path to the configuration object
+        required: true
+        type: str
+      state:
+        description:
+          - State of the configuration object
+        required: true
+        type: str
+        choices: [ "present", "absent" ]
+      values:
+        description:
+          - List of key-value pairs to set on the configuration object
+        required: false
+        type: list
+        elements: dict
+        suboptions:
+          attr:
+            description:
+              - Attribute name
+            required: true
+            type: str
+          value:
+            description:
+              - Value to set
+            required: true
+            type: str
+          mode:
+            description:
+              - Mode to use for this attribute value in the script
+              - Refer to the `routeros_batch.scriptgen` module for more information
+'''
 #   routeros:
 #     description:
 #       - Connection details to the Mikrotik RouterOS device
