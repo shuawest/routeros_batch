@@ -112,12 +112,12 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-factname: 
+"<factname>": 
   description: Name of the of the path
   type: list
   elements: dict
   returned: always
-  suboptions:
+  contains:
     path:
       description: Path to the object
       type: str
