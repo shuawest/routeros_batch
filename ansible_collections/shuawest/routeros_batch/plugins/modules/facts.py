@@ -128,7 +128,7 @@ RETURN = '''
       description: List of objects and their attribute values
       type: list
       elements: dict
-      suboptions:
+      contains:
         name:
           description: Attribute value
           type: str
