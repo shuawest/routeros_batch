@@ -11,10 +11,10 @@ description:
 - Uses the C(community.routeros.api) module to interact with the Mikrotik RouterOS API
 - C(routeros) provides the connection details to the device following the C(community.routeros.api) module parameters
 notes:
-- Use `content` to update a script with direct content or a variable
-- Use `commands` to generate a script from a list of commands and apply it to a device
+- Use C(content) to update a script with direct content or a variable
+- Use C(commands) to generate a script from a list of commands and apply it to a device
+- This is an action module that calls multiple apis to add, remove, and execute scripts. Use the C(verbose_steps) flag to see the result of each individual step output.
 - Currently the script output cannot be captured or logged during script execution
-- This is an action module that calls multiple apis to add, remove, and execute scripts. Use the `verbose_steps` flag to see the result of each individual step output.
 attributes:
   platform:
     platforms: RouterOS
@@ -40,13 +40,13 @@ options:
     required: true
     type: str
     choices: [ "present", "absent", "executed", "executed_once", "executed_clean" ]
+  content:
+    description:
+      - Direct content to add to the script
+      - Mutually exclusive with `commands`
+    required: false
+    type: str
 ''' 
-  # content:
-  #   description:
-  #     - Direct content to add to the script
-  #     - Mutually exclusive with `commands`
-  #   required: false
-  #   type: str
   # commands:
   #   description:
   #     - List of commands to generate script
