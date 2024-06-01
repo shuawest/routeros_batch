@@ -11,7 +11,7 @@ description:
 - Uses the C(community.routeros.api_facts) module to interact with the Mikrotik RouterOS API
 - C(routeros) provides the connection details to the device following the C(community.routeros.api_facts) module paramters
 notes:
-- Use O(paths) to fetch facts from the device using a list of paths
+- Use C(paths) to fetch facts from the device using a list of paths
 - For list objects it pulls all objects and attributes without a filter
 - Be aware of the amount of data being pulled from the device - use the C(routeros.api_facts) module if more precision is required.
 attributes:
