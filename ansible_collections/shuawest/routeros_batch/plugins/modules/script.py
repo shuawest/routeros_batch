@@ -43,13 +43,13 @@ options:
   content:
     description:
       - Direct content to add to the script
-      - Mutually exclusive with `commands`
+      - Mutually exclusive with C(commands)
     required: false
     type: str 
   commands:
     description:
       - List of commands to generate script
-      - Mutually exclusive with `content`
+      - Mutually exclusive with C(content)
     required: false
     type: list
     elements: dict
@@ -90,30 +90,30 @@ options:
           mode:
             description:
               - Mode to use for this attribute value in the script
-              - Refer to the `routeros_batch.scriptgen` module for more information
+              - Refer to the C(routeros_batch.scriptgen) module for more information
+  routeros:
+    description:
+      - Connection details to the Mikrotik RouterOS device
+      - Refer to the community.routeros.api module parameters for more information
+    required: true
+    type: dict
+    suboptions:
+      hostname:
+        description:
+          - Hostname or IP address of the RouterOS device
+        required: true
+        type: str
+      username:
+        description:
+          - Username to authenticate with
+        required: true
+        type: str
+      password:
+        description:
+          - Password to authenticate with
+        required: true
+        type: str
 '''
-#   routeros:
-#     description:
-#       - Connection details to the Mikrotik RouterOS device
-#       - Refer to the community.routeros.api module parameters for more information
-#     required: true
-#     type: dict
-#     suboptions:
-#       hostname:
-#         description:
-#           - Hostname or IP address of the RouterOS device
-#         required: true
-#         type: str
-#       username:
-#         description:
-#           - Username to authenticate with
-#         required: true
-#         type: str
-#       password:
-#         description:
-#           - Password to authenticate with
-#         required: true
-#         type: str
 # seealso:
 #   - module: community.routeros.api
 # '''
