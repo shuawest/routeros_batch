@@ -34,13 +34,13 @@ options:
       - Show the result of each individual step in the output
     required: false
     type: bool
-'''
-  # state:
-  #   description:
-  #     - State of the script for the task execution
-  #   required: true
-  #   type: str
-  #   choices: [ "present", "absent", "executed", "executed_once", "executed_clean" ]
+  state:
+    description:
+      - State of the script for the task execution
+    required: true
+    type: str
+    choices: [ "present", "absent", "executed", "executed_once", "executed_clean" ]
+''' 
   # content:
   #   description:
   #     - Direct content to add to the script
