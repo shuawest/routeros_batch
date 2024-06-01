@@ -1,13 +1,17 @@
 ---
 
+- set_fact:
+    ros_user: admin
+    ros_pass: asdfASDF
+    ros_host: 192.168.1.11
 
 - name: Batch fetch RouterOS facts
   ignore_errors: true
   shuawest.routeros_batch.facts: 
     routeros:
-      username: admin
-      password: asdfASDF
-      hostname: 192.168.1.11
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
     include_null: true
     as_keyvalue: true
     paths: 

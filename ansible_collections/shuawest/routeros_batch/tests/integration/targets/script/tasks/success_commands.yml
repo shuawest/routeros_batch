@@ -1,6 +1,5 @@
 ---
 
-
 - name: Test command generation against Mikrotik RouterOS
   ignore_errors: true
   shuawest.routeros_batch.script: 
@@ -8,9 +7,9 @@
     comment: "added by ansible routeros_batch.script integration test" 
     state: executed_clean
     routeros:
-      username: admin
-      password: asdfASDF
-      hostname: 192.168.1.11
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
     commands: 
     - desc: Put VPN bridge 'bridge'
       path: /interface bridge
@@ -21,6 +20,8 @@
         mode: both
       - attr: fast-forward
         value: no
+      - attr: comment
+        value: "my bridge comment to be cleared"
     - desc: Remove VPN user 'guest'
       path: /ppp secret
       state: absent
@@ -44,4 +45,75 @@
       - script_command_int_test.changed == true
       - script_command_int_test.script | length > 10
       - "'Executed script ' in script_command_int_test.msg"
+
+
+- name: Get bridge facts before 'comment' value is cleared
+  shuawest.routeros_batch.facts: 
+    routeros:
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
+    include_null: true
+    as_keyvalue: false
+    paths: 
+      - name: bridges       
+        path: interface bridge
+  register: bridge_facts_before_clear_int_test
+- debug: 
+    var: bridge_facts_before_clear_int_test
+
+- name: Test command generation with clearing a value
+  ignore_errors: true
+  shuawest.routeros_batch.script: 
+    name: "script_clear_value_int_test"
+    comment: "added by ansible routeros_batch.script integration test" 
+    state: executed_once
+    routeros:
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
+    commands: 
+    - desc: Clear 'comment' value on bridge 'bridge'
+      path: /interface bridge
+      state: present
+      values:
+      - attr: name
+        value: bridge
+        mode: both
+      - attr: comment
+        mode: clear
+  register: script_clear_value_int_test
+
+- name: Get bridge facts after mtu value is cleared
+  shuawest.routeros_batch.facts: 
+    routeros:
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
+    include_null: true
+    as_keyvalue: false
+    paths: 
+      - name: bridges       
+        path: interface bridge
+  register: bridge_facts_after_clear_int_test
+
+- name: bridge_facts_before_clear_int_test
+  debug: 
+    var: bridge_facts_before_clear_int_test
+- name: script_clear_value_int_test
+  debug: 
+    var: script_clear_value_int_test
+- name: bridge_facts_after_clear_int_test
+  debug: 
+    var: bridge_facts_after_clear_int_test
+
+- assert:
+    that: 
+      - script_clear_value_int_test.failed == false
+      - script_clear_value_int_test.changed == true
+      - script_clear_value_int_test.script | length > 10
+      - "'Executed script ' in script_clear_value_int_test.msg"
+      # TODO: convert the bridges values to a dict, find the bridge with name 'bridge' and check that the comment is null
+      # - bridge_facts_before_clear_int_test.bridges.values[0].comment == "my bridge comment to be cleared"
+      # - bridge_facts_after_clear_int_test.bridges.values[0].comment == null
 

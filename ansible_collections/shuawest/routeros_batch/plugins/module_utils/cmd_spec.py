@@ -65,11 +65,13 @@ def get_spec(is_commands_required=False):
             KEY_VALUES: dict(type='list', elements='dict', options={
                 KEY_ATTR: dict(type='str', required=True),
                 KEY_VALUE: dict(type='str', required=False),
-                KEY_MODE: dict(type='str', choices=[
-                    ValueMode.SET.value, 
-                    ValueMode.MATCH.value, 
-                    ValueMode.BOTH.value,
-                    ValueMode.CLEAR.value], default=ValueMode.SET.value),
+                KEY_MODE: dict(type='str', 
+                    choices=[
+                        ValueMode.SET.value, 
+                        ValueMode.MATCH.value, 
+                        ValueMode.BOTH.value,
+                        ValueMode.CLEAR.value], 
+                    default=ValueMode.SET.value),
             }),
         },
     )
@@ -143,6 +145,8 @@ def command_value_keypairs(command):
         if value[KEY_MODE] == ValueMode.SET.value or value[KEY_MODE] == ValueMode.BOTH.value:
             val = format_value(value[KEY_VALUE])
             keypairs += "%s=%s " % (value[KEY_ATTR], val)
+        if value[KEY_MODE] == ValueMode.CLEAR.value:
+            keypairs += "%s=\\\"\\\" " % value[KEY_ATTR]
     return keypairs
 
 def command_match_keypairs(command):

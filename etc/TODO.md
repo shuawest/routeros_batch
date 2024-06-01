@@ -7,7 +7,6 @@ NOTE: This collection is not supported - use at your own risk
 # TODO
  
 - add batch fasts integration tests
-- add removal of field values (! & null) in the commands
 - execution validation:
   - consider a reconcile module that uses commands to generate and execute a script, then compare the batch fetch of the paths
   to validate settings. 
@@ -17,7 +16,7 @@ NOTE: This collection is not supported - use at your own risk
   - explore using ssh to submit commands (facts module limits objects that can be queried)
 - build unit testing with mocks for action modules 
 
-
+x add removal of field values (! & null) in the commands
 x add document generation and document to galaxy levels
 x setup mini mtk router for testing while traveling
 X increase minor version of module and release
