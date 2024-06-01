@@ -113,10 +113,9 @@ options:
           - Password to authenticate with
         required: true
         type: str
+seealso:
+  - module: community.routeros.api
 '''
-# seealso:
-#   - module: community.routeros.api
-# '''
 
 EXAMPLES = '''
 - name: Run a set of commands converted to a routeros script on a Mikrotik device
