@@ -9,9 +9,9 @@
     verbose_steps: true
     state: executed_once
     routeros:
-      username: admin
-      password: asdfASDF
-      hostname: 192.168.1.11
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
     content: |
       {
         /log info \"trying to capture script output in console output or logs\"

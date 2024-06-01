@@ -9,9 +9,9 @@
     comment: "added by ansible routeros_batch.script integration test" 
     state: executed_clean
     routeros:
-      username: admin
-      password: asdfASDF
-      hostname: 192.168.1.11
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
     commands: 
     - desc: Put VPN bridge 'bridge'
       path: /BadPathinterface bridge

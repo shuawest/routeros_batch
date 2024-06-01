@@ -9,9 +9,9 @@
     verbose_steps: true
     state: executed_clean
     routeros:
-      username: admin
-      password: asdfASDF
-      hostname: 192.168.1.11
+      username: "{{ ros_user }}"
+      password: "{{ ros_pass }}"
+      hostname: "{{ ros_host }}"
     content: |
       /system identity print
       /system resource print
