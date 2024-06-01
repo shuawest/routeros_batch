@@ -9,7 +9,7 @@ short_description: Add, remove, execute a named script on a Mikrotik RouterOS de
 description: 
 - The script can be added, removed, executed, executed once, or executed and removed from the device
 - Uses the community.routeros.api module to interact with the Mikrotik RouterOS API
-- C(routeros) provides the connection details to the device following the community.routeros.api module paramters
+- C(routeros) provides the connection details to the device following the `community.routeros.api` module parameters
 notes:
 - Use `content` to update a script with direct content or a variable
 - Use `commands` to generate a script from a list of commands and apply it to a device
@@ -29,12 +29,12 @@ options:
       - Comment to add to the script
     required: false
     type: str
-  '''
-  # verbose_steps:
-  #   description:
-  #     - Show the result of each individual step in the output
-  #   required: false
-  #   type: bool
+  verbose_steps:
+    description:
+      - Show the result of each individual step in the output
+    required: false
+    type: bool
+'''
   # state:
   #   description:
   #     - State of the script for the task execution
