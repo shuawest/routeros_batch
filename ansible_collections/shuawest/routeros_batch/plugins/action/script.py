@@ -61,9 +61,8 @@ def get_argument_spec():
     )
     return argument_spec
 
-class ActionModule(ActionBase):
 
-    
+class ActionModule(ActionBase):
 
     def run(self, tmp=None, task_vars=None):
         if task_vars is None:
@@ -71,6 +70,12 @@ class ActionModule(ActionBase):
 
         validation_result, new_module_args = self.validate_argument_spec(
             argument_spec=get_argument_spec(),
+            # mutually_exclusive=[
+            #     ('commands', 'content'),
+            # ],
+            # required_one_of=[
+            #     ('commands', 'content'),
+            # ],
         )
 
         module = super(ActionModule, self).run(tmp, task_vars)

@@ -6,7 +6,6 @@ NOTE: This collection is not supported - use at your own risk
 
 # TODO
  
-- add document generation and document to galaxy levels
 - add batch fasts integration tests
 - add removal of field values (! & null) in the commands
 - execution validation:
@@ -19,6 +18,7 @@ NOTE: This collection is not supported - use at your own risk
 - build unit testing with mocks for action modules 
 
 
+x add document generation and document to galaxy levels
 x setup mini mtk router for testing while traveling
 X increase minor version of module and release
 X separate integration tests into task files

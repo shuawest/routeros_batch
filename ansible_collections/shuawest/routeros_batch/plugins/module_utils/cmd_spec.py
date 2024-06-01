@@ -17,6 +17,7 @@ class ValueMode(Enum):
     SET = "set"
     MATCH = "match"
     BOTH = "both"
+    CLEAR = "clear"
 
 class CommandState(Enum):
     PRESENT = "present"
@@ -63,11 +64,12 @@ def get_spec(is_commands_required=False):
                 CommandState.ABSENT.value], default=CommandState.PRESENT.value),
             KEY_VALUES: dict(type='list', elements='dict', options={
                 KEY_ATTR: dict(type='str', required=True),
-                KEY_VALUE: dict(type='str', required=True),
+                KEY_VALUE: dict(type='str', required=False),
                 KEY_MODE: dict(type='str', choices=[
                     ValueMode.SET.value, 
                     ValueMode.MATCH.value, 
-                    ValueMode.BOTH.value], default=ValueMode.SET.value),
+                    ValueMode.BOTH.value,
+                    ValueMode.CLEAR.value], default=ValueMode.SET.value),
             }),
         },
     )

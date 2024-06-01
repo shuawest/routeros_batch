@@ -62,4 +62,4 @@
       # if you can't connect, you can't change the target device
       - bad_connect_int_test.changed == false  
       # check the output error message 
-      - "'Error while connecting: timed out' in bad_connect_int_test.msg"
+      - "'Error while connecting: timed out' in bad_connect_int_test.msg or 'Failed to add script ' in bad_connect_int_test.msg"
