@@ -61,11 +61,12 @@ options:
               - V(set) will set the value only
               - V(match) will query for matching objects using this value
               - V(both) will both query with the value and set the value
+              - V(clear) will set the value to null (currently cannot match on null values)
               - if changing a value you are querying based on, use the same attribute name with the old value using V(match) and new value using V(set)
             required: false
             default: "set"
             type: str
-            choices: [ "set", "match", "both" ]
+            choices: [ "set", "match", "both", "clear" ]
 seealso:
   - module: community.routeros.api
 '''
