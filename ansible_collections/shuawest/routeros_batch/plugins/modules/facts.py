@@ -112,7 +112,7 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-"<name>": 
+factname: 
   description: Name of the of the path
   type: list
   elements: dict
