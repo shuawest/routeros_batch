@@ -1,12 +1,6 @@
-# Ansible Collection - shuawest.routeros_batch
-
-Modules for MikroTik RouterOS idempotent script generation, script execution, and batch fact retrieval
-
-NOTE: This collection is not supported - use at your own risk
 
 # TODO
  
-- add batch fasts integration tests
 - execution validation:
   - consider a reconcile module that uses commands to generate and execute a script, then compare the batch fetch of the paths
   to validate settings. 
@@ -16,6 +10,7 @@ NOTE: This collection is not supported - use at your own risk
   - explore using ssh to submit commands (facts module limits objects that can be queried)
 - build unit testing with mocks for action modules 
 
+x add batch facts integration tests
 x add removal of field values (! & null) in the commands
 x add document generation and document to galaxy levels
 x setup mini mtk router for testing while traveling
