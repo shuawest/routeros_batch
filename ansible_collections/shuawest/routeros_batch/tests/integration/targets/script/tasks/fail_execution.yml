@@ -47,7 +47,7 @@
     routeros:
       username: baduser
       password: badpassword
-      hostname: 192.168.100.100
+      hostname: 192.168.190.100
     content: | 
       /system identity print
       /system resource print
