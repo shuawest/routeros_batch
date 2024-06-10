@@ -22,7 +22,6 @@
             ]
         }
     },
-    "postCreateCommand": "poetry install --no-interaction --no-ansi --no-root --with dev",
     "forwardPorts": [
         4000
     ]

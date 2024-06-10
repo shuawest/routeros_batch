@@ -12,7 +12,9 @@ RUN pip3 install poetry && \
     poetry config virtualenvs.create false
 
 # Create user
-RUN groupadd -r user && useradd -r -g user -d /opt/app-root -s /bin/zsh user
+RUN mkdir -p /home/user && chmod ug+rwx /home/user 
+RUN groupadd -r user && useradd -r -g user -d /home/user -s /bin/zsh user
+RUN chown user:user /home/user
 
 # make working directories
 RUN mkdir -p /opt/app-root && chmod a+rwx /opt/app-root && chown user:user /opt/app-root
@@ -24,13 +26,13 @@ USER user
 # Set default shell to zsh
 ENV SHELL /bin/zsh
 
+# Install and configure oh-my-zsh
+RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh 
+COPY zshrc /home/user/.zshrc
+
 # Create workspace dir used by VSCode
 RUN mkdir -p /opt/app-root/src/workspace/
 WORKDIR /opt/app-root/src/workspace/
-
-# Install and configure oh-my-zsh
-RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh 
-COPY zshrc /opt/app-root/.zshrc
 
 ENTRYPOINT /bin/zsh
 
