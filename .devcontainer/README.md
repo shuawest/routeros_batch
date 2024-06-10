@@ -16,4 +16,6 @@
 - Default image
   https://aka.ms/ghcs-default-image
 
-  
+- Ansible Execution Environment
+  https://www.ansible.com/blog/the-anatomy-of-automation-execution-environments/
+  EE_BUILDER_IMAGE='registry.redhat.io/ansible-automation-platform-22/ansible-builder-rhel8:latest'  

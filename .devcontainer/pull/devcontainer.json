@@ -1,5 +1,5 @@
 {
-    "image": "quay.io/jaydbyoo/pymodule-creator-ee:lastest",
+    "image": "quay.io/godepict/devcontainer-ansible-module:latest",
     "workspaceMount": "source=${localWorkspaceFolder},target=/opt/app-root/src/workspace/,type=bind",
     "workspaceFolder": "/opt/app-root/src/workspace/",
     "customizations": {
