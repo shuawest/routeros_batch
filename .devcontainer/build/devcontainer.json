@@ -23,10 +23,6 @@
         }
     },
     "postCreateCommand": "poetry install --no-interaction --no-ansi --no-root --with dev",
-    "runArgs": [
-        "--env-file",
-        ".env"
-    ],
     "forwardPorts": [
         4000
     ]
