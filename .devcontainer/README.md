@@ -25,3 +25,11 @@
 
 - Content Creator Guide
   https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_content_navigator_creator_guide/index  
+
+- Adding molecule to existing role
+  https://www.jeffgeerling.com/blog/2019/how-add-integration-tests-ansible-collection-molecule
+
+
+
+
+
