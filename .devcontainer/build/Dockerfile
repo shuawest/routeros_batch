@@ -1,4 +1,7 @@
-FROM registry.redhat.io/ansible-automation-platform-22/ansible-builder-rhel8:latest
+#FROM registry.redhat.io/ansible-automation-platform-22/ansible-builder-rhel8:latest
+FROM registry.redhat.io/ansible-automation-platform-24/ansible-python-toolkit-rhel9:latest
+#FROM registry.redhat.io/ansible-automation-platform-24/ansible-python-base-rhel9:latest
+#FROM registry.redhat.io/ansible-automation-platform/ansible-builder-rhel9:latest
 
 # Install oh-my-zsh as root
 USER root
