@@ -7,21 +7,23 @@ FROM registry.redhat.io/ansible-automation-platform-24/ansible-python-toolkit-rh
 USER root
 RUN microdnf install -y zsh wget vim bind-utils && microdnf clean all
 
-# Install ansible testing python package
-RUN pip3 install ansible-core ansible-test unittest2 pytest pytest-xdist pytest-forked ordereddict python-dotenv
-
-# Install poetry
-RUN pip3 install poetry && \
-    poetry config virtualenvs.create false
-
 # Create user
-RUN mkdir -p /home/user && chmod ug+rwx /home/user 
+RUN mkdir -p /home/user && chmod ug+rwx /home/user
 RUN groupadd -r user && useradd -r -g user -d /home/user -s /bin/zsh user
 RUN chown user:user /home/user
 
 # make working directories
 RUN mkdir -p /opt/app-root && chmod a+rwx /opt/app-root && chown user:user /opt/app-root
 RUN mkdir /workspaces && chmod a+rwx /workspaces && chown user:user /workspaces
+
+
+# Install ansible testing python package
+RUN pip3 install --user user ansible-core ansible-test unittest2 pytest pytest-xdist pytest-forked ordereddict python-dotenv
+
+# Install poetry
+RUN pip3 install poetry && \
+    poetry config virtualenvs.create false
+
 
 # Switch to user
 USER user
