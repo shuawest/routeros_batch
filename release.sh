@@ -54,7 +54,7 @@ echo "Updating version to $NEW_CLN_VERSION"
 sed -i "s/version: $CLN_VERSION/version: $NEW_CLN_VERSION/" galaxy.yml
 
 git add galaxy.yml
-git commit -m "Bump version to $NEW_CLN_VERSION"
+git commit -m "Increment version to $NEW_CLN_VERSION"
 git tag -a v$NEW_CLN_VERSION -m "Release version $NEW_CLN_VERSION"
 git push origin v$NEW_CLN_VERSION
 

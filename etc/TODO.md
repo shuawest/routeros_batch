@@ -1,6 +1,10 @@
 
 # TODO
  
+- restructure for the modules at the base layer of the folder and place in ansible_collections hierarchy
+- configure to git push with proper ssh key
+
+
 - execution validation:
   - consider a reconcile module that uses commands to generate and execute a script, then compare the batch fetch of the paths
   to validate settings. 
@@ -23,7 +27,7 @@ X create class that derives ROS_api_module to add, remove, and execute scripts i
 X test module with integration tests 
 X create batch_facts module that extends ROS_api_info module to reach list of facts and return results in structured format
 
-# Research
+# Resources
 - Call an ansible module from a module
   https://stackoverflow.com/questions/46893066/calling-an-ansible-module-from-another-ansible-module
 
@@ -36,15 +40,6 @@ X create batch_facts module that extends ROS_api_info module to reach list of fa
 - Action plugin - how to write
   https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#action-plugins 
 
-# Removed from docs
+- developing ansible module best practices
+  https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_best_practices.html#developing-modules-best-practices
 
-script state options
-- `present` - add or update the script on the default, but not execute it
-- `absent` - remove the script from the device
-- `executed` - execute script already on the device
-- `executed_once` - add or update the script, execute it
-- `executed_clean` - add or update the script, execute it, then remove it from the device
-
-script sample
-    sample:
-- "; ### present: Put VPN bridge 'bridge' ### ;\n\n:if ([:len [/interface bridge find name=\\\"bridge\\\" ]] > 0) do={\n\t/interface bridge set [ find name=\\\"bridge\\\" ] name=\\\"bridge\\\" fast-forward=no \n} else={\n\t/interface bridge add name=\\\"bridge\\\" fast-forward=no \n}\n\n\n; ### absent: Remove VPN user 'guest' ### ;\n\n:if ([:len [/ppp secret find name=\\\"guest\\\" ]] > 0) do={\n\t/ppp secret remove [ find name=\\\"guest\\\" ]\n}\n\n\n",
