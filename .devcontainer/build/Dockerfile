@@ -13,8 +13,8 @@ RUN groupadd -r user && useradd -r -g user -d /home/user -s /bin/zsh user
 RUN chown user:user /home/user
 
 # make working directories
-RUN mkdir -p /opt/app-root && chmod a+rwx /opt/app-root && chown user:user /opt/app-root
-RUN mkdir /workspaces && chmod a+rwx /workspaces && chown user:user /workspaces
+RUN mkdir -p /opt/app-root && chmod ug+rwx /opt/app-root && chown user:user /opt/app-root
+RUN mkdir /workspaces && chmod ug+rwx /workspaces && chown user:user /workspaces
 
 
 # Install ansible testing python package
