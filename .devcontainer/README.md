@@ -18,4 +18,10 @@
 
 - Ansible Execution Environment
   https://www.ansible.com/blog/the-anatomy-of-automation-execution-environments/
-  EE_BUILDER_IMAGE='registry.redhat.io/ansible-automation-platform-22/ansible-builder-rhel8:latest'  
+  EE_BUILDER_IMAGE='registry.redhat.io/ansible-automation-platform-22/ansible-builder-rhel8:latest'
+
+- Molecule
+  https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1/#:~:text=Molecule%20is%20a%20complete%20testing,and%20testing%20of%20Ansible%20roles.
+
+- Content Creator Guide
+  https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_content_navigator_creator_guide/index  
