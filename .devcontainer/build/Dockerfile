@@ -18,7 +18,7 @@ RUN mkdir /workspaces && chmod ug+rwx /workspaces && chown user:user /workspaces
 
 
 # Install ansible testing python package
-RUN pip3 install ansible-core molecule ansible-lint ansible-test unittest2 pytest pytest-xdist pytest-forked ordereddict python-dotenv
+RUN pip3 install ansible-core molecule ansible-test unittest2 pytest pytest-xdist pytest-forked ordereddict python-dotenv
 
 # Install poetry
 RUN pip3 install poetry && \
