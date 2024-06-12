@@ -6,10 +6,6 @@
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/opt/app-root/src/workspace/ansible_collections/shuawest/routeros_batch/,type=bind",
     "workspaceFolder": "/opt/app-root/src/workspace/ansible_collections/shuawest/routeros_batch/",
-    "extensions": [
-		"ms-python.python",
-        "redhat.ansible"
-	],
     "customizations": {
         "vscode": {
             "settings": {
