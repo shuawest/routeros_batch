@@ -33,8 +33,8 @@ RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -
 COPY zshrc /home/user/.zshrc
 
 # Create workspace dir used by VSCode
-RUN mkdir -p /opt/app-root/src/workspace/
-WORKDIR /opt/app-root/src/workspace/
+RUN mkdir -p /opt/app-root/src/workspace/ansible_collections/shuawest/routeros_batch/
+WORKDIR /opt/app-root/src/workspace/ansible_collections/shuawest/routeros_batch/
 
 ENTRYPOINT /bin/zsh
 

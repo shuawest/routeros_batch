@@ -25,17 +25,7 @@ echo "upgrade pip"
 python3 -m pip install --upgrade pip
 
 echo "Install ansible $ANSIBLE_VER"
-python3 -m pip install ansible==$ANSIBLE_VER
-python3 -m pip install ansible-core
-python3 -m pip install pytest
-python3 -m pip install pytest-xdist
-python3 -m pip install unittest2
-python3 -m pip install ordereddict
-python3 -m pip install pytest-forked
-python3 -m pip install pytest-coverage
-python3 -m pip install pytest-html-reporter
-python3 -m pip install selenium
-python3 -m pip install python-dotenv
+python3 -m pip install ansible-core molecule ansible-lint unittest2 pytest pytest-xdist pytest-forked ordereddict python-dotenv
 
 which ansible 
 
